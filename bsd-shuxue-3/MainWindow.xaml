@@ -7,5 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button x:Name="btnTest" Content="测试" Click="btnTest_Click"></Button>
     </Grid>
 </Window>

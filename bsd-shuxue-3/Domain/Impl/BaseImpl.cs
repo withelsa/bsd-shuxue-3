@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Force.DeepCloner;
+using System;
 using System.Windows;
 
 namespace bsd_shuxue_3.Domain.Impl
@@ -101,8 +102,19 @@ namespace bsd_shuxue_3.Domain.Impl
             var propertyWindow = new PropertyGridWindow();
             propertyWindow.Owner = owner;
             propertyWindow.Title = String.Format("{0}的配置:", this.Title);
-            propertyWindow.propertyGrid.SelectedObject = this.Config;
-            return propertyWindow.ShowDialog();
+            T config = this.cloneConfig();
+            propertyWindow.SelectedObject = config;
+            var ret = propertyWindow.ShowDialog();
+            if (ret == true)
+            {
+                this.Config = config;
+            }
+            return ret;
+        }
+
+        protected virtual T cloneConfig()
+        {
+            return this.Config != null ? this.Config.DeepClone() : default(T);
         }
     }
 

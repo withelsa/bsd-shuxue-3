@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using bsd_shuxue_3.Domain.Impl;
+using System.Windows;
 
 namespace bsd_shuxue_3
 {
@@ -10,6 +11,13 @@ namespace bsd_shuxue_3
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private JiaJianHunHeQuestionFactory questionFactory = new JiaJianHunHeQuestionFactory();
+
+        private void btnTest_Click(object sender, RoutedEventArgs e)
+        {
+            questionFactory.DoConfig(this);
         }
     }
 }

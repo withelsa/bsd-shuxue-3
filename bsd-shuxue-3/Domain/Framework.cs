@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace bsd_shuxue_3.Domain
@@ -57,5 +59,19 @@ namespace bsd_shuxue_3.Domain
         /// <param name="owner">主窗口实例</param>
         /// <returns>是否更新了配置</returns>
         bool? DoConfig(Window owner);
+    }
+
+    /// <summary>
+    /// 可以执行校验的接口
+    /// </summary>
+    internal interface IValidatable
+    {
+        /// <summary>
+        /// 执行校验，并且返回结果
+        /// </summary>
+        /// <param name="messages">错误消息</param>
+        /// <returns>校验是否有效</returns>
+
+        bool Validate(IList<String> messages);
     }
 }

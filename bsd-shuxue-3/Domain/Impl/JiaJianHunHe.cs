@@ -7,37 +7,55 @@ namespace bsd_shuxue_3.Domain.Impl
     /// <summary>
     /// 加减混合运算的设置
     /// </summary>
-    internal class JiaJianHunHeConfig
+    internal class JiaJianHunHeConfig : IValidatable
     {
         /// <summary>
         /// 可以使用的最大数字
         /// </summary>
+        [Category("数字范围")]
         [Description("可以使用的最大数字")]
-        public int MaxNumber { get; set; } = 999;
+        public uint MaxNumber { get; set; } = 999;
 
         /// <summary>
         /// 可以使用的最小数字
         /// </summary>
+        [Category("数字范围")]
         [Description("可以使用的最小数字")]
-        public int MinNumber { get; set; } = 100;
+        public uint MinNumber { get; set; } = 100;
 
         /// <summary>
         /// 最大结果
         /// </summary>
+        [Category("结果范围")]
         [Description("最大结果")]
-        public int MaxResult { get; set; } = 1000;
+        public uint MaxResult { get; set; } = 1000;
 
         /// <summary>
         /// 最小结果
         /// </summary>
+        [Category("结果范围")]
         [Description("最小结果")]
-        public int MinResult { get; set; } = 1;
+        public uint MinResult { get; set; } = 1;
 
         /// <summary>
         /// 使用括号的概率
         /// </summary>
-        [Description("使用括号的概率")]
-        public int BracketPropability = 60;
+        [Category("其他")]
+        [Description("使用括号的概率(%)")]
+        public uint BracketPropability { get; set; } = 60;
+
+        public bool Validate(IList<string> messages)
+        {
+            if (this.MaxNumber < this.MinNumber)
+            {
+                messages.Add("【最大数字】不能小于【最小数字】");
+            }
+            if (this.MaxResult < this.MinResult)
+            {
+                messages.Add("【最大结果】不能小于【最小结果】");
+            }
+            return messages.Count < 1;
+        }
     }
 
     /// <summary>
@@ -120,7 +138,7 @@ namespace bsd_shuxue_3.Domain.Impl
         /// <returns></returns>
         private bool useBracket()
         {
-            return this.Random.Next(0, 100) >= this.Config.BracketPropability;
+            return this.Random.Next(0, 100) <= this.Config.BracketPropability;
         }
 
         /// <summary>
@@ -140,7 +158,7 @@ namespace bsd_shuxue_3.Domain.Impl
         {
             while (true)
             {
-                int number = this.Random.Next(this.Config.MinNumber, this.Config.MaxNumber + 1);
+                int number = this.Random.Next((int)this.Config.MinNumber, (int)this.Config.MaxNumber + 1);
                 if (!numbersUsed.Contains(number))
                 {
                     numbersUsed.Add(number);

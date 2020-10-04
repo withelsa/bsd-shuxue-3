@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using bsd_shuxue_3.Utils;
+using System;
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Forms;
 
 namespace bsd_shuxue_3.Domain.Impl
@@ -8,16 +11,34 @@ namespace bsd_shuxue_3.Domain.Impl
     /// </summary>
     public partial class PropertyGridWindow : Window
     {
+        public object SelectedObject { get; set; }
+
         public PropertyGridWindow()
         {
             InitializeComponent();
         }
 
-        public PropertyGrid PropertyGrid
+        private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            get
+            this.propertyGrid.SelectedObject = this.SelectedObject;
+        }
+
+        private void btnOk_Click(object sender, RoutedEventArgs e)
+        {
+            var valid = true;
+            var validatable = this.SelectedObject as IValidatable;
+            if (validatable != null)
             {
-                return this.propertyGrid;
+                List<String> messages = new List<String>();
+                valid = validatable.Validate(messages);
+                if (!valid)
+                {
+                    MsgBox.Error(messages[0]);
+                }
+            }
+            if (valid)
+            {
+                this.DialogResult = true;
             }
         }
     }
