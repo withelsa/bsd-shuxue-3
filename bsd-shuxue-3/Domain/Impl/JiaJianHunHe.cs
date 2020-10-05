@@ -77,7 +77,7 @@ namespace bsd_shuxue_3.Domain.Impl
         {
             base.Code = "JiaJianHunHe";
             base.Title = "加减混合运算";
-            base.Description = base.Title;
+            base.Description = String.Join("\r\n", "▶ 1000 以内", "▶ 三个数字", "▶ 加减混合运算", "▶ 带括号");
             base.Config = new JiaJianHunHeConfig();
         }
 

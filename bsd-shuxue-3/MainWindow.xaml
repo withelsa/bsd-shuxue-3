@@ -5,8 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bsd_shuxue_3"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button x:Name="btnTest" Content="测试" Click="btnTest_Click"></Button>
-    </Grid>
+        Title="北师大版小学数学三年级上册习题库" Height="480" Width="800" WindowStartupLocation="CenterScreen"
+        Icon="math.ico"
+        Loaded="Window_Loaded">
+    <DockPanel>
+        <ToolBar DockPanel.Dock="Top">
+            <Label Content="题目类型："></Label>
+            <ComboBox x:Name="comboQuestionFactories" MinWidth="300" SelectionChanged="comboQuestionFactories_SelectionChanged"></ComboBox>
+            <Button x:Name="btnConfigQuestionFactory" Content="设置..." ToolTip="对题目类型进行详细设置" Click="btnConfigQuestionFactory_Click"></Button>
+            <Separator Width="1" Margin="3"></Separator>
+            <Label Content="出题数量："></Label>
+            <TextBox x:Name="txtQuestionCount" MinWidth="30" Text="10"></TextBox>
+            <Separator Width="1" Margin="3"></Separator>
+            <Button x:Name="btnCreateQuestions" Content="出题" ToolTip="根据左侧配置新出题目，添加下面的题目列表中" Click="btnCreateQuestions_Click"></Button>
+            <Separator Width="1" Margin="3"></Separator>
+            <Button x:Name="btnShuffleQuestions" Content="打乱" ToolTip="随机打乱已出题目" Click="btnShuffleQuestions_Click"></Button>
+            <Button x:Name="btnReorderQuestions" Content="正序" ToolTip="按出题顺序，恢复打乱的题目" Click="btnReorderQuestions_Click"></Button>
+            <Separator Width="1" Margin="3"></Separator>
+            <Button x:Name="btnClearQuestions" Content="清空" ToolTip="清除所有已出的题目" Click="btnClearQuestions_Click"></Button>
+            <Button x:Name="btnCopyQuestions" Content="复制" ToolTip="复制已出题目到剪贴板" Click="btnCopyQuestions_Click"></Button>
+            <Separator Width="1" Margin="3"></Separator>
+            <Button x:Name="btnSetQuestionsFont" Content="字体" ToolTip="设置【题目一览】文本框的字体" Click="btnSetQuestionsFont_Click"></Button>
+        </ToolBar>
+        <GroupBox Header="题目一览" Margin="3">
+            <TextBox x:Name="txtQuestions" Margin="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" FontSize="16"></TextBox>
+        </GroupBox>
+    </DockPanel>
 </Window>

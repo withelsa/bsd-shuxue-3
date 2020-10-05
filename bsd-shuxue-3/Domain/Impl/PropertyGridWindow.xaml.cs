@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Forms;
 
 namespace bsd_shuxue_3.Domain.Impl
 {
