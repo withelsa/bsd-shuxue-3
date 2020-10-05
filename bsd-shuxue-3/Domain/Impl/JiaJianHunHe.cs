@@ -63,16 +63,6 @@ namespace bsd_shuxue_3.Domain.Impl
     /// </summary>
     internal class JiaJianHunHeQuestionFactory : QuestionFactoryBase<JiaJianHunHeConfig>
     {
-        /// <summary>
-        /// 加号
-        /// </summary>
-        public const String OP_PLUS = "+";
-
-        /// <summary>
-        /// 减号
-        /// </summary>
-        public const String OP_MINUS = "-";
-
         public JiaJianHunHeQuestionFactory()
         {
             base.Code = "JiaJianHunHe";

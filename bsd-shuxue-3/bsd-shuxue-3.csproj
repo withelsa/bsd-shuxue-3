@@ -64,6 +64,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Domain\Impl\SiZeHunHe.cs" />
     <Compile Include="Utils\ItemWrapper.cs" />
     <Compile Include="Utils\MsgBox.cs" />
     <Page Include="Domain\Impl\PropertyGridWindow.xaml">

@@ -21,6 +21,26 @@ namespace bsd_shuxue_3.Domain.Impl
 
     internal abstract class QuestionFactoryBase<T> : IQuestionFactory, IConfigurable
     {
+        /// <summary>
+        /// 加号
+        /// </summary>
+        public const String OP_PLUS = "+";
+
+        /// <summary>
+        /// 减号
+        /// </summary>
+        public const String OP_MINUS = "-";
+
+        /// <summary>
+        /// 乘号
+        /// </summary>
+        public const String OP_MULTPLY = "*";
+
+        /// <summary>
+        /// 除号
+        /// </summary>
+        public const String OP_DIVIDE = "/";
+
         public String Code { get; set; }
 
         public String Title { get; set; }
