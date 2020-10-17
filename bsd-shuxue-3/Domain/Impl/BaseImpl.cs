@@ -1,18 +1,60 @@
 ﻿using Force.DeepCloner;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows;
 
 namespace bsd_shuxue_3.Domain.Impl
 {
     internal class Question : IQuestion
     {
-        public String Content { get; set; }
+        /// <summary>
+        /// 显示的问题
+        /// </summary>
+        private String content;
+
+        /// <summary>
+        /// 实际的计算表达式
+        /// </summary>
+        private String expresion;
+
+        public String Content
+        {
+            get
+            {
+                return this.content;
+            }
+        }
+
+        public String Expression
+        {
+            get
+            {
+                return this.expresion;
+            }
+            set
+            {
+                this.expresion = value;
+                this.updateContent();
+            }
+        }
+
+        protected virtual void updateContent()
+        {
+            this.content = String.IsNullOrEmpty(this.expresion) ? this.expresion :
+                this.expresion
+                .Replace(' ', ' ')
+                .Replace('+', '＋')
+                .Replace('-', '－')
+                .Replace('*', '×')
+                .Replace('/', '÷');
+        }
 
         public int Answer
         {
             get
             {
-                var expression = new NCalc.Expression(this.Content);
+                var expression = new NCalc.Expression(this.Expression);
                 Func<int> func = expression.ToLambda<int>();
                 return func();
             }
@@ -20,6 +62,7 @@ namespace bsd_shuxue_3.Domain.Impl
     }
 
     internal abstract class QuestionFactoryBase<T> : IQuestionFactory, IConfigurable
+        where T : new()
     {
         /// <summary>
         /// 加号
@@ -45,17 +88,34 @@ namespace bsd_shuxue_3.Domain.Impl
 
         public String Title { get; set; }
 
-        public String Description { get; set; }
+        private string description;
+
+        public String Description
+        {
+            get
+            {
+                return String.IsNullOrEmpty(this.description) ? this.Title : this.description;
+            }
+            set
+            {
+                this.description = value;
+            }
+        }
 
         /// <summary>
         /// 配置内容
         /// </summary>
-        public T Config { get; set; }
+        public T Config { get; set; } = new T();
 
         /// <summary>
         /// 随机数生成器
         /// </summary>
-        public Random Random { get; set; } = new Random();
+        protected Random Random { get; } = new Random();
+
+        /// <summary>
+        /// 是否可以配置
+        /// </summary>
+        public bool CanConfig { get; set; } = true;
 
         /// <summary>
         /// 生成下一个布尔值
@@ -66,6 +126,27 @@ namespace bsd_shuxue_3.Domain.Impl
             return this.Random.Next(2) == 0;
         }
 
+        protected int NextNumber(object minValue, object maxValue)
+        {
+            var min = Convert.ToInt32(minValue);
+            var max = Convert.ToInt32(maxValue);
+            return max > min ? this.Random.Next(min, max + 1) :
+                this.Random.Next(max, min + 1);
+        }
+
+        protected int NextNumber(object min, object max, HashSet<int> usedNumbers)
+        {
+            while (true)
+            {
+                var number = this.NextNumber(min, max);
+                if (usedNumbers != null && usedNumbers.Contains(number))
+                {
+                    continue;
+                }
+                return number;
+            }
+        }
+
         public virtual IQuestion CreateInstance()
         {
             var question = new Question();
@@ -73,15 +154,16 @@ namespace bsd_shuxue_3.Domain.Impl
             {
                 try
                 {
-                    question.Content = this.CreateQuestionContent();
+                    question.Expression = this.CreateQuestionExpression();
                     while (!this.IsValidQuestion(question))
                     {
-                        question.Content = this.CreateQuestionContent();
+                        question.Expression = this.CreateQuestionExpression();
                     }
                     return question;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Debug.WriteLine("创建问题时发生错误:\r\n{0}", ex);
                 }
             }
         }
@@ -96,7 +178,7 @@ namespace bsd_shuxue_3.Domain.Impl
             var valid = false;
             try
             {
-                valid = question != null && !String.IsNullOrEmpty(question.Content) && this.IsValidQuestionAnswer(question.Answer);
+                valid = question != null && !String.IsNullOrEmpty(question.Expression) && this.IsValidQuestionAnswer(question.Answer);
             }
             catch (Exception)
             {
@@ -115,7 +197,7 @@ namespace bsd_shuxue_3.Domain.Impl
         /// 生成一个问题
         /// </summary>
         /// <returns></returns>
-        protected abstract String CreateQuestionContent();
+        protected abstract String CreateQuestionExpression();
 
         public virtual bool? DoConfig(Window owner)
         {

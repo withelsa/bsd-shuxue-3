@@ -53,6 +53,11 @@ namespace bsd_shuxue_3.Domain
     internal interface IConfigurable
     {
         /// <summary>
+        /// 是否支持配置
+        /// </summary>
+        bool CanConfig { get; }
+
+        /// <summary>
         /// 显示配置对话框
         /// </summary>
         /// <param name="owner">主窗口实例</param>

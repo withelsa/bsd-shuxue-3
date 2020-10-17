@@ -3,7 +3,6 @@ using bsd_shuxue_3.Utils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Forms;
 
@@ -36,6 +35,7 @@ namespace bsd_shuxue_3
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            this.Title += String.Format(" - 版本({0})", BuildVersion.BUILD_VERSION);
             this.initQuestionFactories();
         }
 
@@ -44,34 +44,17 @@ namespace bsd_shuxue_3
         /// </summary>
         private void initQuestionFactories()
         {
+            LinkedList<IQuestionFactory> questionFactories = new LinkedList<IQuestionFactory>();
+            var initializer = new QuestionFactoriesInitializer();
+            initializer.Initialize(questionFactories);
+
             // 遍历所有定义的 IQuestionFactory 类型
-            var questionFactoryType = typeof(IQuestionFactory);
-            var types = Assembly.GetExecutingAssembly().GetTypes();
-            foreach (var type in types)
+            foreach (var questionFactory in questionFactories)
             {
-                // 排除非 IQuestionFactory 类型
-                if (type.IsAbstract || !type.IsClass || !questionFactoryType.IsAssignableFrom(type))
-                {
-                    continue;
-                }
-
-                try
-                {
-                    // 添加实例
-                    var questionFactory = Activator.CreateInstance(type) as IQuestionFactory;
-                    if (questionFactory == null)
-                    {
-                        continue;
-                    }
-
-                    var itemWrapper = new ItemWrapper<IQuestionFactory>();
-                    itemWrapper.Data = questionFactory;
-                    itemWrapper.Text = questionFactory.Title;
-                    this.questionFactories.Add(itemWrapper);
-                }
-                catch (Exception)
-                {
-                }
+                var itemWrapper = new ItemWrapper<IQuestionFactory>();
+                itemWrapper.Data = questionFactory;
+                itemWrapper.Text = questionFactory.Title;
+                this.questionFactories.Add(itemWrapper);
             }
 
             // 按照字母序排序
@@ -87,7 +70,7 @@ namespace bsd_shuxue_3
         {
             var questionFactory = this.getCurrentQuestionFactory();
             var configurable = questionFactory as IConfigurable;
-            if (configurable != null)
+            if (configurable != null && configurable.CanConfig)
             {
                 configurable.DoConfig(this);
             }

@@ -64,7 +64,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BuildVersion.cs" />
+    <Compile Include="Domain\Impl\ChuFa.cs" />
+    <Compile Include="Domain\Impl\ChengFa.cs" />
+    <Compile Include="Domain\Impl\LianJiaLianJian.cs" />
     <Compile Include="Domain\Impl\SiZeHunHe.cs" />
+    <Compile Include="Domain\QuestionFactoriesInitializer.cs" />
     <Compile Include="Utils\ItemWrapper.cs" />
     <Compile Include="Utils\MsgBox.cs" />
     <Page Include="Domain\Impl\PropertyGridWindow.xaml">
