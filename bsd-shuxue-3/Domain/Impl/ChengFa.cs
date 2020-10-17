@@ -54,7 +54,7 @@ namespace bsd_shuxue_3.Domain.Impl
             /// </summary>
             [Category("结果范围")]
             [Description("最小结果")]
-            public uint MinResult { get; set; } = 1;
+            public uint MinResult { get; set; } = 10;
 
             public bool Validate(IList<string> messages)
             {

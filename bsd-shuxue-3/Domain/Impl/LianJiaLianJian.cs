@@ -143,7 +143,11 @@ namespace bsd_shuxue_3.Domain.Impl
                 {
                     // 判断是否符合进位条件
                     // 符合条件的话返回，否则重试
-                    if ((!tuiwei) || this.IsTuiWei(result, num))
+                    if (tuiwei && !this.IsTuiWei(result, num))
+                    {
+                        num = this.NextNumber(this.Config.MinNumber, Math.Min(result, this.Config.MaxNumber));
+                    }
+                    else
                     {
                         break;
                     }
@@ -171,7 +175,11 @@ namespace bsd_shuxue_3.Domain.Impl
                 {
                     // 判断是否符合进位条件
                     // 符合条件的话返回，否则重试
-                    if ((!jinwei) || this.IsJinWei(result, num))
+                    if (jinwei && !this.IsJinWei(result, num))
+                    {
+                        num = this.nextNumber(usedNumbers);
+                    }
+                    else
                     {
                         break;
                     }

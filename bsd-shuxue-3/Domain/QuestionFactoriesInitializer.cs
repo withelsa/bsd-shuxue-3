@@ -30,12 +30,13 @@ namespace bsd_shuxue_3.Domain
                 config.MaxNumber = 999;
                 config.MinSteps = config.MaxSteps = 2;
             }
-            // 【连加连减】三位数之内的两次连续加减（高概率进退位）
+            // 【连加连减】三位数之内的两次连续加减（较高概率进退位）
             {
                 var questionFactory = new LianJiaLianJian.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "三位数之内的两次连续加减（高概率进退位）";
+                questionFactory.Title = "三位数之内的两次连续加减（较高概率进退位）";
                 questionFactory.Level = DifficultyLevel.Hard;
+                questionFactory.MaxRetry = 10;
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 999;
@@ -48,6 +49,7 @@ namespace bsd_shuxue_3.Domain
                 collection.Add(questionFactory);
                 questionFactory.Title = "三位数之内的两次连续加减（极高概率进退位）";
                 questionFactory.Level = DifficultyLevel.Hard;
+                questionFactory.MaxRetry = 100;
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 999;
@@ -65,12 +67,13 @@ namespace bsd_shuxue_3.Domain
                 config.MaxResult = 20000;
                 config.MinSteps = config.MaxSteps = 2;
             }
-            // 【连加连减】四位数之内的两次连续加减（高概率进退位）
+            // 【连加连减】四位数之内的两次连续加减（较高概率进退位）
             {
                 var questionFactory = new LianJiaLianJian.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "四位数之内的两次连续加减（高概率进退位）";
+                questionFactory.Title = "四位数之内的两次连续加减（较高概率进退位）";
                 questionFactory.Level = DifficultyLevel.Hard;
+                questionFactory.MaxRetry = 10;
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 9999;
@@ -84,6 +87,7 @@ namespace bsd_shuxue_3.Domain
                 collection.Add(questionFactory);
                 questionFactory.Title = "四位数之内的两次连续加减（极高概率进退位）";
                 questionFactory.Level = DifficultyLevel.Hard;
+                questionFactory.MaxRetry = 100;
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 9999;
@@ -104,19 +108,20 @@ namespace bsd_shuxue_3.Domain
                 config.MinSteps = 2;
                 config.MaxSteps = 3;
             }
-            // 【连加连减】四位数之内的 2 - 3 次连续加减（高概率进退位）
+            // 【连加连减】四位数之内的 2 - 3 次连续加减（极高概率进退位）
             {
                 var questionFactory = new LianJiaLianJian.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "四位数之内的 2 - 3 次连续加减（高概率进退位）";
+                questionFactory.Title = "四位数之内的 2 - 3 次连续加减（极高概率进退位）";
                 questionFactory.Level = DifficultyLevel.VeryHard;
+                questionFactory.MaxRetry = 100;
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 9999;
                 config.MaxResult = 99999;
                 config.MinSteps = 2;
                 config.MaxSteps = 3;
-                config.JinTuiWeiRatio = 67;
+                config.JinTuiWeiRatio = 95;
             }
         }
 
@@ -130,6 +135,7 @@ namespace bsd_shuxue_3.Domain
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 999;
+                config.MinResult = 100;
                 config.MaxResult = 9999;
             }
             // 【加减混合】三位数之内的加减混合（括号强化）
@@ -140,6 +146,7 @@ namespace bsd_shuxue_3.Domain
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 999;
+                config.MinResult = 100;
                 config.MaxResult = 9999;
                 config.BracketPropability = 200;
             }
@@ -151,6 +158,7 @@ namespace bsd_shuxue_3.Domain
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 9999;
+                config.MinResult = 100;
                 config.MaxResult = 99999;
             }
             // 【加减混合】四位数之内的加减混合（括号强化）
@@ -162,6 +170,7 @@ namespace bsd_shuxue_3.Domain
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 9999;
+                config.MinResult = 100;
                 config.MaxResult = 99999;
                 config.BracketPropability = 200;
             }
@@ -176,6 +185,7 @@ namespace bsd_shuxue_3.Domain
                 questionFactory.Title = "三位数加减，两位数乘、除一位数";
                 var config = questionFactory.Config;
                 config.MaxNumber = 999;
+                config.MinResult = 100;
                 config.MaxResult = 9999;
                 config.MaxMultiplyA = 99;
                 config.MinMultiplyA = 10;
