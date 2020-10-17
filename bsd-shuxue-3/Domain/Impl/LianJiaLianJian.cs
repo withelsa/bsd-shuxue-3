@@ -79,7 +79,7 @@ namespace bsd_shuxue_3.Domain.Impl
             public QuestionFactory()
             {
                 base.Code = "LianJiaLianJian";
-                base.Title = "连加连减";
+                base.Category = "连加连减";
             }
 
             protected override string CreateQuestionExpression()

@@ -68,7 +68,7 @@ namespace bsd_shuxue_3.Domain.Impl
             public QuestionFactory()
             {
                 base.Code = "JiaJianHunHe";
-                base.Title = "加减混合运算";
+                base.Category = "加减混合运算";
             }
 
             protected override string CreateQuestionExpression()

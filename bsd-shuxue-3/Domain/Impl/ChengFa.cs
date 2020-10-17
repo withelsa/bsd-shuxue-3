@@ -70,7 +70,7 @@ namespace bsd_shuxue_3.Domain.Impl
             public QuestionFactory()
             {
                 base.Code = "ChengFa";
-                base.Title = "乘法";
+                base.Category = "乘法";
             }
 
             protected override string CreateQuestionExpression()

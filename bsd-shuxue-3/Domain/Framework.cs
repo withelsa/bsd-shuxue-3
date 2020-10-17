@@ -10,6 +10,11 @@ namespace bsd_shuxue_3.Domain
     internal interface IQuestion
     {
         /// <summary>
+        /// 对应的问题生成器
+        /// </summary>
+        IQuestionFactory Factory { get; }
+
+        /// <summary>
         /// 问题内容
         /// </summary>
         String Content { get; }
@@ -32,6 +37,11 @@ namespace bsd_shuxue_3.Domain
         IQuestion CreateInstance();
 
         /// <summary>
+        /// 对应的分类
+        /// </summary>
+        String Category { get; }
+
+        /// <summary>
         /// 唯一标识
         /// </summary>
         String Code { get; }
@@ -45,6 +55,11 @@ namespace bsd_shuxue_3.Domain
         /// 详细描述
         /// </summary>
         String Description { get; }
+
+        /// <summary>
+        /// 难度
+        /// </summary>
+        DifficultyLevel Level { get; }
     }
 
     /// <summary>

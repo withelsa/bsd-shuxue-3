@@ -24,7 +24,7 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new LianJiaLianJian.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【连加连减】三位数之内的两次连续加减";
+                questionFactory.Title = "三位数之内的两次连续加减";
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 999;
@@ -34,7 +34,7 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new LianJiaLianJian.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【连加连减】四位数之内的两次连续加减";
+                questionFactory.Title = "四位数之内的两次连续加减";
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 9999;
@@ -45,7 +45,8 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new LianJiaLianJian.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【连加连减】四位数之内的 2 - 3 次连续加减";
+                questionFactory.Title = "四位数之内的 2 - 3 次连续加减";
+                questionFactory.Level = DifficultyLevel.Hard;
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 9999;
@@ -61,7 +62,7 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new JiaJianHunHe.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【加减混合】三位数之内的加减混合";
+                questionFactory.Title = "三位数之内的加减混合";
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 999;
@@ -71,7 +72,7 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new JiaJianHunHe.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【加减混合】三位数之内的加减混合（括号强化）";
+                questionFactory.Title = "三位数之内的加减混合（括号强化）";
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 999;
@@ -82,7 +83,7 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new JiaJianHunHe.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【加减混合】四位数之内的加减混合";
+                questionFactory.Title = "四位数之内的加减混合";
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 9999;
@@ -92,7 +93,8 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new JiaJianHunHe.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【加减混合】四位数之内的加减混合（括号强化）";
+                questionFactory.Title = "四位数之内的加减混合（括号强化）";
+                questionFactory.Level = DifficultyLevel.Hard;
                 var config = questionFactory.Config;
                 config.MinNumber = 100;
                 config.MaxNumber = 9999;
@@ -107,7 +109,7 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new SiZeHunHe.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【四则混合】三位数加减，两位数乘、除一位数";
+                questionFactory.Title = "三位数加减，两位数乘、除一位数";
                 var config = questionFactory.Config;
                 config.MaxNumber = 999;
                 config.MaxResult = 9999;
@@ -128,7 +130,7 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new ChengFa.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【乘法】两位数 × 一位数";
+                questionFactory.Title = "两位数 × 一位数";
                 var config = questionFactory.Config;
                 config.MaxA = 99;
                 config.MinA = 10;
@@ -140,7 +142,7 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new ChengFa.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【乘法】两位数 × 一位数（≥ 5）";
+                questionFactory.Title = "两位数 × 一位数（≥ 5）";
                 var config = questionFactory.Config;
                 config.MaxA = 99;
                 config.MinA = 10;
@@ -152,7 +154,8 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new ChengFa.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【乘法】两位数 × 两位数";
+                questionFactory.Title = "两位数 × 两位数";
+                questionFactory.Level = DifficultyLevel.Hard;
                 var config = questionFactory.Config;
                 config.MaxA = 99;
                 config.MinA = 10;
@@ -164,7 +167,7 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new ChengFa.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【乘法】三位数 × 一位数";
+                questionFactory.Title = "三位数 × 一位数";
                 var config = questionFactory.Config;
                 config.MaxA = 999;
                 config.MinA = 100;
@@ -176,7 +179,8 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new ChengFa.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【乘法】三位数 × 一位数（≥ 5）";
+                questionFactory.Title = "三位数 × 一位数（≥ 5）";
+                questionFactory.Level = DifficultyLevel.Hard;
                 var config = questionFactory.Config;
                 config.MaxA = 999;
                 config.MinA = 100;
@@ -188,7 +192,7 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new ChengFa.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【乘法】四位数 × 一位数";
+                questionFactory.Title = "四位数 × 一位数";
                 var config = questionFactory.Config;
                 config.MaxA = 9999;
                 config.MinA = 1000;
@@ -200,7 +204,8 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new ChengFa.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【乘法】四位数 × 一位数（≥ 5）";
+                questionFactory.Title = "四位数 × 一位数（≥ 5）";
+                questionFactory.Level = DifficultyLevel.Hard;
                 var config = questionFactory.Config;
                 config.MaxA = 9999;
                 config.MinA = 1000;
@@ -216,7 +221,7 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new ChuFa.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【除法】两位数 ÷ 一位数";
+                questionFactory.Title = "两位数 ÷ 一位数";
                 var config = questionFactory.Config;
                 config.MaxA = 99;
                 config.MinA = 10;
@@ -228,7 +233,7 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new ChuFa.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【除法】两位数 ÷ 一位数（≥ 5）";
+                questionFactory.Title = "两位数 ÷ 一位数（≥ 5）";
                 var config = questionFactory.Config;
                 config.MaxA = 99;
                 config.MinA = 10;
@@ -240,7 +245,7 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new ChuFa.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【除法】三位数 ÷ 一位数";
+                questionFactory.Title = "三位数 ÷ 一位数";
                 var config = questionFactory.Config;
                 config.MaxA = 999;
                 config.MinA = 100;
@@ -252,7 +257,8 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new ChuFa.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【除法】三位数 ÷ 一位数（≥ 5）";
+                questionFactory.Title = "三位数 ÷ 一位数（≥ 5）";
+                questionFactory.Level = DifficultyLevel.Hard;
                 var config = questionFactory.Config;
                 config.MaxA = 999;
                 config.MinA = 100;
@@ -264,7 +270,7 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new ChuFa.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【除法】四位数 ÷ 一位数";
+                questionFactory.Title = "四位数 ÷ 一位数";
                 var config = questionFactory.Config;
                 config.MaxA = 9999;
                 config.MinA = 1000;
@@ -276,7 +282,8 @@ namespace bsd_shuxue_3.Domain
             {
                 var questionFactory = new ChuFa.QuestionFactory();
                 collection.Add(questionFactory);
-                questionFactory.Title = "【除法】四位数 ÷ 一位数（≥ 5）";
+                questionFactory.Title = "四位数 ÷ 一位数（≥ 5）";
+                questionFactory.Level = DifficultyLevel.Hard;
                 var config = questionFactory.Config;
                 config.MaxA = 9999;
                 config.MinA = 1000;

@@ -112,7 +112,7 @@ namespace bsd_shuxue_3.Domain.Impl
             public QuestionFactory()
             {
                 base.Code = "SiZeHunHe";
-                base.Title = "四则混合运算";
+                base.Category = "四则混合运算";
             }
 
             protected override string CreateQuestionExpression()

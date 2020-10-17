@@ -59,6 +59,8 @@ namespace bsd_shuxue_3.Domain.Impl
                 return func();
             }
         }
+
+        public IQuestionFactory Factory { get; set; }
     }
 
     internal abstract class QuestionFactoryBase<T> : IQuestionFactory, IConfigurable
@@ -83,6 +85,8 @@ namespace bsd_shuxue_3.Domain.Impl
         /// 除号
         /// </summary>
         public const String OP_DIVIDE = "/";
+
+        public String Category { get; set; }
 
         public String Code { get; set; }
 
@@ -118,6 +122,11 @@ namespace bsd_shuxue_3.Domain.Impl
         public bool CanConfig { get; set; } = true;
 
         /// <summary>
+        /// 难度
+        /// </summary>
+        public DifficultyLevel Level { get; set; } = DifficultyLevel.Normal;
+
+        /// <summary>
         /// 生成下一个布尔值
         /// </summary>
         /// <returns></returns>
@@ -150,6 +159,7 @@ namespace bsd_shuxue_3.Domain.Impl
         public virtual IQuestion CreateInstance()
         {
             var question = new Question();
+            question.Factory = this;
             while (true)
             {
                 try

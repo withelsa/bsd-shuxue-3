@@ -4,31 +4,150 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:bsd_shuxue_3"
+        xmlns:input="clr-namespace:System.Windows.Input;assembly=PresentationCore"
         mc:Ignorable="d"
-        Title="北师大版小学数学三年级上册习题库" Height="480" Width="800" WindowStartupLocation="CenterScreen"
+        Title="北师大版小学数学三年级上册习题库" Height="640" Width="1000" WindowStartupLocation="CenterScreen"
         Icon="math.ico"
         Loaded="Window_Loaded">
+    <Window.Resources>
+        <ImageSourceConverter x:Key="ImageSourceConverter" x:Name="ImageSourceConverter"></ImageSourceConverter>
+        <Style TargetType="Image">
+            <Setter Property="MaxWidth" Value="20"></Setter>
+            <Setter Property="MaxHeight" Value="20"></Setter>
+        </Style>
+        <RoutedUICommand x:Key="ConfigQuestionFactory" Text="设置选中的问题生成器"></RoutedUICommand>
+        <RoutedUICommand x:Key="CreateQuestions" Text="出题"></RoutedUICommand>
+        <RoutedUICommand x:Key="ShuffleQuestions" Text="打乱出题顺序"></RoutedUICommand>
+        <RoutedUICommand x:Key="ReorderQuestions" Text="恢复出题顺序"></RoutedUICommand>
+        <RoutedUICommand x:Key="ClearQuestions" Text="清空问题"></RoutedUICommand>
+        <RoutedUICommand x:Key="CopyQuestions" Text="复制问题"></RoutedUICommand>
+        <RoutedUICommand x:Key="SetQuestionsFont" Text="设置题目一览控件的字体"></RoutedUICommand>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding x:Name="ConfigQuestionFactory" Command="{StaticResource ConfigQuestionFactory}"
+                        Executed="ConfigQuestionFactory_Executed" CanExecute="ConfigQuestionFactory_CanExecute"></CommandBinding>
+        <CommandBinding x:Name="CreateQuestions" Command="{StaticResource CreateQuestions}"
+                        Executed="CreateQuestions_Executed" CanExecute="CreateQuestions_CanExecute"></CommandBinding>
+        <CommandBinding x:Name="ShuffleQuestions" Command="{StaticResource ShuffleQuestions}"
+                        Executed="ShuffleQuestions_Executed" CanExecute="ShuffleQuestions_CanExecute"></CommandBinding>
+        <CommandBinding x:Name="ReorderQuestions" Command="{StaticResource ReorderQuestions}"
+                        Executed="ReorderQuestions_Executed" CanExecute="ReorderQuestions_CanExecute"></CommandBinding>
+        <CommandBinding x:Name="ClearQuestions" Command="{StaticResource ClearQuestions}"
+                        Executed="ClearQuestions_Executed" CanExecute="ClearQuestions_CanExecute"></CommandBinding>
+        <CommandBinding x:Name="CopyQuestions" Command="{StaticResource CopyQuestions}"
+                        Executed="CopyQuestions_Executed" CanExecute="CopyQuestions_CanExecute"></CommandBinding>
+        <CommandBinding x:Name="SetQuestionsFont" Command="{StaticResource SetQuestionsFont}"
+                        Executed="SetQuestionsFont_Executed" CanExecute="SetQuestionsFont_CanExecute"></CommandBinding>
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Ctrl" Key="G" Command="{StaticResource ConfigQuestionFactory}"></KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="R" Command="{StaticResource CreateQuestions}"></KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="Q" Command="{StaticResource ClearQuestions}"></KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="T" Command="{StaticResource CopyQuestions}"></KeyBinding>
+        <KeyBinding Modifiers="Ctrl" Key="F" Command="{StaticResource SetQuestionsFont}"></KeyBinding>
+    </Window.InputBindings>
     <DockPanel>
         <ToolBar DockPanel.Dock="Top">
-            <Label Content="题目类型："></Label>
-            <ComboBox x:Name="comboQuestionFactories" MinWidth="300" SelectionChanged="comboQuestionFactories_SelectionChanged"></ComboBox>
-            <Button x:Name="btnConfigQuestionFactory" Content="设置..." ToolTip="对题目类型进行详细设置" Click="btnConfigQuestionFactory_Click"></Button>
+            <Label Content="难度"></Label>
+            <ComboBox x:Name="comboDifficulties" MinWidth="80" SelectionChanged="comboDifficulties_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <ItemContainerTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image MaxWidth="20" MaxHeight="20" Source="{Binding Image}"></Image>
+                            <Rectangle Width="3"></Rectangle>
+                            <Label Content="{Binding Title}"></Label>
+                        </StackPanel>
+                    </ItemContainerTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <Separator Width="1" Margin="3"></Separator>
+            <Label Content="分类："></Label>
+            <ComboBox x:Name="comboQuestionCategories" MinWidth="120" SelectionChanged="comboQuestionCategories_SelectionChanged"></ComboBox>
+            <Separator Width="1" Margin="3"></Separator>
+            <Label Content="题型："></Label>
+            <ComboBox x:Name="comboQuestionFactories" MinWidth="300" SelectionChanged="comboQuestionFactories_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <ItemContainerTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image MaxWidth="20" MaxHeight="20" Source="{Binding Difficulty.Image}"></Image>
+                            <Separator Width="1" Margin="3"></Separator>
+                            <Label Content="{Binding Factory.Category}" FontWeight="Bold" Foreground="DarkBlue"></Label>
+                            <Separator Width="1" Margin="3"></Separator>
+                            <Label Content="{Binding Factory.Title}"></Label>
+                        </StackPanel>
+                    </ItemContainerTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <Button x:Name="btnConfigQuestionFactory" ToolTip="对题目类型进行详细设置" Command="{StaticResource ConfigQuestionFactory}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="./resources/config.png"></Image>
+                        <Label>设置 (Ctrl + G)...</Label>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+        </ToolBar>
+        <ToolBar DockPanel.Dock="Top">
             <Label Content="出题数量："></Label>
-            <TextBox x:Name="txtQuestionCount" MinWidth="30" Text="10"></TextBox>
+            <TextBox x:Name="txtQuestionCount" Width="40" Text="10" ToolTip="使用上述题型，出题的数量。不超过 100。"
+                     input:InputMethod.IsInputMethodEnabled="False"
+                     PreviewTextInput="txtQuestionCount_PreviewTextInput"></TextBox>
             <Separator Width="1" Margin="3"></Separator>
-            <Button x:Name="btnCreateQuestions" Content="出题" ToolTip="根据左侧配置新出题目，添加下面的题目列表中" Click="btnCreateQuestions_Click"></Button>
+            <Button x:Name="btnCreateQuestions" ToolTip="根据左侧配置新出题目，添加下面的题目列表中" Command="{StaticResource CreateQuestions}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="./resources/start.png"></Image>
+                        <Label>出题 (Ctrl + R)</Label>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
             <Separator Width="1" Margin="3"></Separator>
-            <Button x:Name="btnShuffleQuestions" Content="打乱" ToolTip="随机打乱已出题目" Click="btnShuffleQuestions_Click"></Button>
-            <Button x:Name="btnReorderQuestions" Content="正序" ToolTip="按出题顺序，恢复打乱的题目" Click="btnReorderQuestions_Click"></Button>
+            <Button x:Name="btnShuffleQuestions" ToolTip="随机打乱已出题目" Command="{StaticResource ShuffleQuestions}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="./resources/random.png"></Image>
+                        <Label>打乱题目</Label>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button x:Name="btnReorderQuestions" ToolTip="按出题顺序，恢复打乱的题目" Command="{StaticResource ReorderQuestions}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="./resources/sorted.png"></Image>
+                        <Label>恢复顺序</Label>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
             <Separator Width="1" Margin="3"></Separator>
-            <Button x:Name="btnClearQuestions" Content="清空" ToolTip="清除所有已出的题目" Click="btnClearQuestions_Click"></Button>
-            <Button x:Name="btnCopyQuestions" Content="复制" ToolTip="复制已出题目到剪贴板" Click="btnCopyQuestions_Click"></Button>
+            <Button x:Name="btnClearQuestions" ToolTip="清除所有已出的题目" Command="{StaticResource ClearQuestions}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="./resources/clear.png"></Image>
+                        <Label>清空题目 (Ctrl + Q)</Label>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
+            <Button x:Name="btnCopyQuestions" ToolTip="复制已出题目到剪贴板" Command="{StaticResource CopyQuestions}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="./resources/copy.png"></Image>
+                        <Label>复制题目 (Ctrl + T)</Label>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
             <Separator Width="1" Margin="3"></Separator>
-            <Button x:Name="btnSetQuestionsFont" Content="字体" ToolTip="设置【题目一览】文本框的字体" Click="btnSetQuestionsFont_Click"></Button>
+            <Button x:Name="btnSetQuestionsFont" ToolTip="设置【题目一览】文本框的字体" Command="{StaticResource SetQuestionsFont}">
+                <Button.Content>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="./resources/font.png"></Image>
+                        <Label>设置字体 (Ctrl + F)</Label>
+                    </StackPanel>
+                </Button.Content>
+            </Button>
         </ToolBar>
         <GroupBox Header="题目一览" Margin="3">
-            <TextBox x:Name="txtQuestions" Margin="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" FontSize="16"></TextBox>
+            <TextBox x:Name="txtQuestions" Margin="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                     FontSize="16" ToolTip="双击复制题目到剪贴板" MouseDoubleClick="txtQuestions_MouseDoubleClick"></TextBox>
         </GroupBox>
     </DockPanel>
 </Window>
