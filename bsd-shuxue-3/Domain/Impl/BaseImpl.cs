@@ -135,6 +135,12 @@ namespace bsd_shuxue_3.Domain.Impl
             return this.Random.Next(2) == 0;
         }
 
+        /// <summary>
+        /// 生成下一个数值
+        /// </summary>
+        /// <param name="minValue"></param>
+        /// <param name="maxValue"></param>
+        /// <returns></returns>
         protected int NextNumber(object minValue, object maxValue)
         {
             var min = Convert.ToInt32(minValue);
@@ -143,6 +149,13 @@ namespace bsd_shuxue_3.Domain.Impl
                 this.Random.Next(max, min + 1);
         }
 
+        /// <summary>
+        /// 生成下一个数值（不重复）
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <param name="usedNumbers"></param>
+        /// <returns></returns>
         protected int NextNumber(object min, object max, HashSet<int> usedNumbers)
         {
             while (true)
@@ -153,6 +166,71 @@ namespace bsd_shuxue_3.Domain.Impl
                     continue;
                 }
                 return number;
+            }
+        }
+
+        protected int NextPercentage()
+        {
+            return this.Random.Next(0, 101);
+        }
+
+        /// <summary>
+        /// 判断是否是进位加法
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        protected bool IsJinWei(int a, int b)
+        {
+            while (true)
+            {
+                // 判断最后一位数
+                var lastA = a % 10;
+                var lastB = b % 10;
+                if (lastA + lastB >= 10)
+                {
+                    // 如果最后一位数的和大于等于 10，那么发生进位
+                    return true;
+                }
+
+                // 否则判断前一位数
+                a = a / 10;
+                b = b / 10;
+                if (a < 1 || b < 1)
+                {
+                    // 如果 a 或者 b 中有一个已经算到了第一位数，那么退出计算
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 判断是否是退位减法
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        protected bool IsTuiWei(int a, int b)
+        {
+            while (true)
+            {
+                // 判断最后一位数
+                var lastA = a % 10;
+                var lastB = b % 10;
+                if (lastA < lastB)
+                {
+                    // 如果被减数的最后一位数小于减数的最后一位数，那么发生退位
+                    return true;
+                }
+
+                // 否则判断前一位数
+                a = a / 10;
+                b = b / 10;
+                if (a < 1 || b < 1)
+                {
+                    // 如果 a 或者 b 中有一个已经算到了第一位数，那么退出计算
+                    return false;
+                }
             }
         }
 

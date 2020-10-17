@@ -57,6 +57,11 @@ namespace bsd_shuxue_3.Domain.Impl
             [Description("最大加减次数")]
             public uint MaxSteps { get; set; } = 2;
 
+            /// <summary>
+            /// 进位退位的比例(0 的时候不特别计算进位和退位)
+            /// </summary>
+            public uint JinTuiWeiRatio { get; set; } = 0;
+
             public bool Validate(IList<string> messages)
             {
                 if (this.MaxNumber < this.MinNumber)
@@ -76,6 +81,8 @@ namespace bsd_shuxue_3.Domain.Impl
         /// </summary>
         internal class QuestionFactory : QuestionFactoryBase<Config>
         {
+            public int MaxRetry { get; set; } = 10;
+
             public QuestionFactory()
             {
                 base.Code = "LianJiaLianJian";
@@ -101,14 +108,14 @@ namespace bsd_shuxue_3.Domain.Impl
                     if (plus)
                     {
                         // 添加加法运算
-                        var num = this.nextNumber(usedNumbers);
+                        var num = this.nextPlusNumber(result, usedNumbers);
                         result += num;
                         sb.Append(String.Format(" + {0}", num));
                     }
                     else
                     {
                         // 添加减法运算
-                        var num = this.NextNumber(this.Config.MinNumber, Math.Min(result, this.Config.MaxNumber));
+                        var num = this.nextMinusNumber(result, usedNumbers);
                         result -= num;
                         sb.Append(String.Format(" - {0}", num));
                     }
@@ -116,6 +123,62 @@ namespace bsd_shuxue_3.Domain.Impl
 
                 // 返回
                 return sb.ToString();
+            }
+
+            /// <summary>
+            /// 计算下一个减数
+            /// </summary>
+            /// <param name="result"></param>
+            /// <param name="usedNumbers"></param>
+            /// <returns></returns>
+            private int nextMinusNumber(int result, HashSet<int> usedNumbers)
+            {
+                // 扔骰子判定是否需要退位
+                var tuiwei = result > 10 &&
+                    (this.Config.JinTuiWeiRatio < 1 || this.Config.JinTuiWeiRatio >= this.NextPercentage());
+
+                // 生成一个加数
+                var num = this.NextNumber(this.Config.MinNumber, Math.Min(result, this.Config.MaxNumber));
+                for (var i = 0; i < this.MaxRetry; i++)
+                {
+                    // 判断是否符合进位条件
+                    // 符合条件的话返回，否则重试
+                    if ((!tuiwei) || this.IsTuiWei(result, num))
+                    {
+                        break;
+                    }
+                }
+
+                // 返回
+                return num;
+            }
+
+            /// <summary>
+            /// 计算下一个加数
+            /// </summary>
+            /// <param name="result"></param>
+            /// <param name="usedNumbers"></param>
+            /// <returns></returns>
+            private int nextPlusNumber(int result, HashSet<int> usedNumbers)
+            {
+                // 扔骰子判定是否需要进位
+                var jinwei = result > 10 &&
+                    (this.Config.JinTuiWeiRatio < 1 || this.Config.JinTuiWeiRatio >= this.NextPercentage());
+
+                // 生成一个加数
+                var num = this.nextNumber(usedNumbers);
+                for (var i = 0; i < this.MaxRetry; i++)
+                {
+                    // 判断是否符合进位条件
+                    // 符合条件的话返回，否则重试
+                    if ((!jinwei) || this.IsJinWei(result, num))
+                    {
+                        break;
+                    }
+                }
+
+                // 返回
+                return num;
             }
 
             /// <summary>
