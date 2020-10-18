@@ -146,8 +146,33 @@
             </Button>
         </ToolBar>
         <GroupBox Header="题目一览" Margin="3">
-            <TextBox x:Name="txtQuestions" Margin="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+            <DockPanel>
+                <ToolBar DockPanel.Dock="Top">
+                    <Label Content="显示模式："></Label>
+                    <ComboBox x:Name="comboDisplayMode" SelectedIndex="0">
+                        <ComboBoxItem>文本模式</ComboBoxItem>
+                    </ComboBox>
+                    <Separator Width="1" Margin="3"></Separator>
+                    <Button x:Name="btnShowAnswer" Click="btnShowAnswer_Click">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="./resources/show.png"></Image>
+                                <Label>显示答案</Label>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                    <Button x:Name="btnHideAnswer" Click="btnHideAnswer_Click">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="./resources/hide.png"></Image>
+                                <Label>隐藏答案</Label>
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+                </ToolBar>
+                <TextBox x:Name="txtQuestions" Margin="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
                      FontSize="16" ToolTip="双击复制题目到剪贴板" MouseDoubleClick="txtQuestions_MouseDoubleClick"></TextBox>
+            </DockPanel>
         </GroupBox>
     </DockPanel>
 </Window>

@@ -73,6 +73,8 @@ namespace bsd_shuxue_3
             this.initComboBoxDifficulties();
             this.initComboBoxQuestionCategories();
             this.filterComboBoxQuestionFactories();
+            this.isAnswerVisible = true;
+            this.updateShowHideAnswerButtons();
         }
 
         /// <summary>
@@ -283,7 +285,15 @@ namespace bsd_shuxue_3
             for (var i = 0; i < this.questions2show.Count; i++)
             {
                 var question = this.questions2show[i];
-                var line = String.Format("【第 {0} 题】\t{1} = {2}", i + 1, question.Content, question.Answer);
+                String line = null;
+                if (this.isAnswerVisible)
+                {
+                    line = String.Format("【第 {0} 题】\t{1} = {2}", i + 1, question.Content, question.Answer);
+                }
+                else
+                {
+                    line = String.Format("【第 {0} 题】\t{1} = ？", i + 1, question.Content);
+                }
                 lines.Add(line);
             }
 
@@ -495,5 +505,31 @@ namespace bsd_shuxue_3
         }
 
         #endregion 设置字体
+
+        #region 显示、隐藏答案
+
+        private bool isAnswerVisible = false;
+
+        private void updateShowHideAnswerButtons()
+        {
+            this.btnShowAnswer.Visibility = this.isAnswerVisible ? Visibility.Collapsed : Visibility.Visible;
+            this.btnHideAnswer.Visibility = this.isAnswerVisible ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void btnShowAnswer_Click(object sender, RoutedEventArgs e)
+        {
+            this.isAnswerVisible = true;
+            this.updateShowHideAnswerButtons();
+            this.updateQuestionTextBox();
+        }
+
+        private void btnHideAnswer_Click(object sender, RoutedEventArgs e)
+        {
+            this.isAnswerVisible = false;
+            this.updateShowHideAnswerButtons();
+            this.updateQuestionTextBox();
+        }
+
+        #endregion 显示、隐藏答案
     }
 }

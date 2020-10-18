@@ -48,8 +48,8 @@ using System.Windows;
 //é€šè¿‡ä½¿ç”¨ "*"ï¼Œå¦‚ä¸‹æ‰€ç¤º:
 // [assembly: AssemblyVersion("1.0.*")]
 //[assembly: AssemblyVersion("1.0.0.0")]
-//[assembly: AssemblyFileVersion("1.0.0.0")] 
- [assembly: AssemblyTitle("±±Ê¦´óÊýÑ§ÈýÄê¼¶ (2020/10/17 22:20:11)")] 
- [assembly: AssemblyDescription("±±Ê¦´óÊýÑ§ÈýÄê¼¶ (2020/10/17 22:20:11)")] 
- [assembly: AssemblyVersion("1.0.2020.1017")] 
- [assembly: AssemblyFileVersion("1.0.2020.1017")] 
+//[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyTitle("ï¿½ï¿½Ê¦ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ê¼¶ (2020/10/17 22:20:11)")]
+[assembly: AssemblyDescription("ï¿½ï¿½Ê¦ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ê¼¶ (2020/10/17 22:20:11)")]
+[assembly: AssemblyVersion("1.0.2020.1017")]
+[assembly: AssemblyFileVersion("1.0.2020.1017")]

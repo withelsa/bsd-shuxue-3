@@ -20,6 +20,43 @@ namespace bsd_shuxue_3.Domain
 
         private void lianJiaLianJian(ICollection<IQuestionFactory> collection)
         {
+            // 【连加连减】三位数之内的单次加减
+            {
+                var questionFactory = new LianJiaLianJian.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "三位数之内的单次加减";
+                questionFactory.Level = DifficultyLevel.Easy;
+                var config = questionFactory.Config;
+                config.MinNumber = 100;
+                config.MaxNumber = 999;
+                config.MinSteps = config.MaxSteps = 1;
+            }
+            // 【连加连减】三位数之内的单次加减（较高概率进退位）
+            {
+                var questionFactory = new LianJiaLianJian.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "三位数之内的单次加减（较高概率进退位）";
+                questionFactory.Level = DifficultyLevel.Normal;
+                questionFactory.MaxRetry = 10;
+                var config = questionFactory.Config;
+                config.MinNumber = 100;
+                config.MaxNumber = 999;
+                config.MinSteps = config.MaxSteps = 1;
+                config.JinTuiWeiRatio = 67;
+            }
+            // 【连加连减】三位数之内的单次加减（极高概率进退位）
+            {
+                var questionFactory = new LianJiaLianJian.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "三位数之内的单次加减（极高概率进退位）";
+                questionFactory.Level = DifficultyLevel.Normal;
+                questionFactory.MaxRetry = 100;
+                var config = questionFactory.Config;
+                config.MinNumber = 100;
+                config.MaxNumber = 999;
+                config.MinSteps = config.MaxSteps = 1;
+                config.JinTuiWeiRatio = 95;
+            }
             // 【连加连减】三位数之内的两次连续加减
             {
                 var questionFactory = new LianJiaLianJian.QuestionFactory();
