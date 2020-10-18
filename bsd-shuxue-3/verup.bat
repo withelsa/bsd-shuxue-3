@@ -8,6 +8,7 @@ set build_month=%date:~5,2%
 set build_day=%date:~8,2%
 
 ECHO 更新编译时间戳...
+chcp 65001
 SET "BUILD_VERSION_FILE=.\BuildVersion.cs"
 ECHO. DEL /F %BUILD_VERSION_FILE%
 DEL /F %BUILD_VERSION_FILE%
@@ -18,8 +19,10 @@ ECHO. 	{ >> %BUILD_VERSION_FILE%
 ECHO. 		public const string BUILD_VERSION = "%dt% %ts%"; >> %BUILD_VERSION_FILE%
 ECHO. 	} >> %BUILD_VERSION_FILE%
 ECHO. } >> %BUILD_VERSION_FILE%
+chcp 936
 
 ECHO 更新版本信息 ...
+chcp 65001
 SET "ASSEMBLY_INFO_FILE=.\Properties\AssemblyInfo.cs"
 SET "ASSEMBLY_INFO_TEMPLATE=.\Properties\AssemblyInfo.tmpl"
 ECHO. DEL /F %ASSEMBLY_INFO_FILE%
@@ -31,5 +34,6 @@ ECHO. [assembly: AssemblyTitle("北师大数学三年级 (%dt% %ts%)")] >> %ASSEMBLY_INF
 ECHO. [assembly: AssemblyDescription("北师大数学三年级 (%dt% %ts%)")] >> %ASSEMBLY_INFO_FILE%
 ECHO. [assembly: AssemblyVersion("1.0.%build_year%.%build_month%%build_day%")] >> %ASSEMBLY_INFO_FILE%
 ECHO. [assembly: AssemblyFileVersion("1.0.%build_year%.%build_month%%build_day%")] >> %ASSEMBLY_INFO_FILE%
+chcp 936
 
 pause
