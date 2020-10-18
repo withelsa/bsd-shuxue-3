@@ -15,6 +15,9 @@
             <Setter Property="MaxWidth" Value="20"></Setter>
             <Setter Property="MaxHeight" Value="20"></Setter>
         </Style>
+        <Style TargetType="Label">
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
         <RoutedUICommand x:Key="ConfigQuestionFactory" Text="设置选中的问题生成器"></RoutedUICommand>
         <RoutedUICommand x:Key="CreateQuestions" Text="出题"></RoutedUICommand>
         <RoutedUICommand x:Key="ShuffleQuestions" Text="打乱出题顺序"></RoutedUICommand>
@@ -48,7 +51,7 @@
     </Window.InputBindings>
     <DockPanel>
         <ToolBar DockPanel.Dock="Top">
-            <Label Content="难度"></Label>
+            <Label Content="难度："></Label>
             <ComboBox x:Name="comboDifficulties" MinWidth="80" SelectionChanged="comboDifficulties_SelectionChanged">
                 <ComboBox.ItemTemplate>
                     <ItemContainerTemplate>
