@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text;
 
 namespace bsd_shuxue_3.Domain.Impl
 {
     /// <summary>
-    /// 四则混合运算
+    /// 四则混合运算(2)
     /// </summary>
-    internal class SiZeHunHe
+    internal class SiZeHunHe2
     {
         /// <summary>
         /// 设置项目
@@ -98,6 +99,27 @@ namespace bsd_shuxue_3.Domain.Impl
             [Description("最小结果")]
             public uint MinResult { get; set; } = 1;
 
+            /// <summary>
+            /// 最小加减次数
+            /// </summary>
+            [Category("混合计算")]
+            [Description("最小加减次数")]
+            public uint MinPlusMinusSteps { get; set; } = 1;
+
+            /// <summary>
+            /// 最大加减次数
+            /// </summary>
+            [Category("混合计算")]
+            [Description("最大加减次数")]
+            public uint MaxPlusMinusSteps { get; set; } = 1;
+
+            /// <summary>
+            /// 乘除比例
+            /// </summary>
+            [Category("混合计算")]
+            [Description("乘除比例")]
+            public uint MultiplyDivideRatio { get; set; } = 80;
+
             public bool Validate(IList<string> messages)
             {
                 return true;
@@ -109,160 +131,131 @@ namespace bsd_shuxue_3.Domain.Impl
         /// </summary>
         internal class QuestionFactory : QuestionFactoryBase<Config>
         {
+            public int MaxRetry { get; set; } = 10;
+
             public QuestionFactory()
             {
-                base.Code = "SiZeHunHe";
-                base.Category = "四则混合运算";
+                base.Code = "SiZeHunHe2";
+                base.Category = "四则混合运算（2）";
             }
 
             protected override string CreateQuestionExpression()
             {
-                String content = null;
+                var sb = new StringBuilder();
+                var result = 0;
 
-                // 决定主操作符
-                if (this.NextBoolean())
+                // 判定加减计算的次数
+                var stepCount = 1 + this.NextNumber(this.Config.MinPlusMinusSteps, this.Config.MaxPlusMinusSteps);
+
+                // 生成各加减计算步骤的值
+                for (var step = 0; step < stepCount; step++)
                 {
-                    // 主运算为加减法，辅运算为乘除法
-                    content = this.createContent4plusMinus();
-                }
-                else
-                {
-                    // 主运算为乘除法，辅运算为加减法
-                    content = this.createContent4multiplyDivide();
+                    this.nextStep(step, ref sb, ref result);
                 }
 
-                // 返回
-                return content;
-            }
-
-            private string createContent4multiplyDivide()
-            {
-                String content = null;
-                int n1 = 0, n2 = 0, n3 = 0, subResult = 0;
-                String op1 = null, op2 = null;
-
-                // 生成主运算的两个数字
-                if (this.NextBoolean())
+                // 检查是否包含乘法或者除法
+                var content = sb.ToString();
+                if (content.IndexOf('*') < 0 && content.IndexOf('/') < 0)
                 {
-                    // 主运算使用乘法
-                    op1 = OP_MULTPLY;
-                    this.nextMultiplyPair(ref n1, ref subResult);
-                }
-                else
-                {
-                    // 主运算使用除法
-                    op1 = OP_DIVIDE;
-                    this.nextDividePair(ref n1, ref subResult);
-                }
-
-                // 生成辅运算的两个数字
-                if (this.NextBoolean())
-                {
-                    // 辅运算使用加法
-                    op2 = OP_PLUS;
-                    if (this.NextBoolean())
-                    {
-                        // 括号用于计算 n1
-                        n2 = this.NextNumber(this.Config.MinNumber, n1);
-                        n3 = n1 - n2;
-                        content = String.Format("({0} {1} {2}) {3} {4}", n2, op2, n3, op1, subResult);
-                    }
-                    else
-                    {
-                        // 括号用于计算 subResult
-                        n2 = this.NextNumber(this.Config.MinNumber, subResult);
-                        n3 = subResult - n2;
-                        content = String.Format("{0} {1} ({2} {3} {4})", n1, op1, n2, op2, n3);
-                    }
-                }
-                else
-                {
-                    // 辅运算使用减法
-                    op2 = OP_MINUS;
-                    if (this.NextBoolean())
-                    {
-                        // 括号用于计算 n1
-                        n2 = this.NextNumber(n1, this.Config.MaxNumber);
-                        n3 = n2 - n1;
-                        content = String.Format("({0} {1} {2}) {3} {4}", n2, op2, n3, op1, subResult);
-                    }
-                    else
-                    {
-                        // 括号用于计算 subResult
-                        n2 = this.NextNumber(subResult, this.Config.MaxNumber);
-                        n3 = n2 - subResult;
-                        content = String.Format("{0} {1} ({2} {3} {4})", n1, op1, n2, op2, n3);
-                    }
+                    throw new InvalidQuestionException();
                 }
 
                 // 返回
                 return content;
             }
 
-            /// <summary>
-            /// 主运算为加减法，辅运算为乘除法
-            /// </summary>
-            /// <returns></returns>
-            private string createContent4plusMinus()
+            protected void nextStep(int step, ref StringBuilder sb, ref int result)
             {
-                String content = null;
-                int n1 = 0, n2 = 0, n3 = 0, subResult = 0;
-                String op1 = null, op2 = null;
+                var isFirstStep = step < 1; // 是否是第一个步骤
+                var usePlusOp = isFirstStep || this.NextBoolean(); // 本步骤是否使用加法
 
-                // 生成辅运算的两个数字
-                if (this.NextBoolean())
+                // 判定是使用乘除法，还是直接使用数字
+                var maxNumber = usePlusOp ? this.Config.MaxNumber : Math.Min(this.Config.MaxNumber, result);
+                var stepValue = 0;
+                var stepExpression = "";
+                for (var retryIndex = 0; retryIndex < this.MaxRetry; retryIndex++)
                 {
-                    // 辅运算使用乘法
-                    op2 = OP_MULTPLY;
-                    this.nextMultiplyPair(ref n2, ref n3);
-                    subResult = n2 * n3;
-                }
-                else
-                {
-                    // 辅运算使用除法
-                    op2 = OP_DIVIDE;
-                    this.nextDividePair(ref n2, ref n3);
-                    subResult = n2 / n3;
-                }
-                content = String.Format("{0} {1} {2}", n2, op2, n3);
-
-                // 生成主运算的数字
-                if (this.NextBoolean())
-                {
-                    // 主运算使用加法
-                    op1 = OP_PLUS;
-                    n1 = this.NextNumber(this.Config.MinNumber, this.Config.MaxNumber);
-                    if (this.NextBoolean())
+                    // 尝试生成一组数字
+                    if (this.Config.MultiplyDivideRatio >= this.NextPercentage())
                     {
-                        // 乘法在前
-                        content = String.Format("{0} {1} {2}", content, op1, n1);
+                        // 使用乘除法
+                        var a = 0;
+                        var b = 0;
+                        if (this.NextBoolean())
+                        {
+                            // 使用乘法
+                            this.nextMultiplyPair(ref a, ref b);
+                            stepValue = a * b;
+                            stepExpression = String.Format("{0} * {1}", a, b);
+                        }
+                        else
+                        {
+                            // 使用除法
+                            this.nextDividePair(ref a, ref b);
+                            if (a <= b)
+                            {
+                                stepValue = -1;
+                                continue;
+                            }
+                            stepValue = a / b;
+                            stepExpression = String.Format("{0} / {1}", a, b);
+                        }
                     }
                     else
                     {
-                        // 乘法在后
-                        content = String.Format("{0} {1} {2}", n1, op1, content);
+                        // 直接使用数字
+                        stepValue = this.NextNumber(this.Config.MinNumber, maxNumber);
+                        stepExpression = stepValue.ToString();
                     }
-                }
-                else
-                {
-                    // 主运算使用减法
-                    op1 = OP_MINUS;
-                    if (this.NextBoolean())
+
+                    // 检查本组数字是否合规
+                    if (usePlusOp)
                     {
-                        // 除法在前
-                        n1 = this.NextNumber(this.Config.MinNumber, subResult);
-                        content = String.Format("{0} {1} {2}", content, op1, n1);
+                        if (result + stepValue <= this.Config.MaxResult)
+                        {
+                            // 如果是加法，那么校验和是否在最大范围之内
+                            break;
+                        }
                     }
                     else
                     {
-                        // 除法在后
-                        n1 = this.NextNumber(subResult, this.Config.MaxNumber);
-                        content = String.Format("{0} {1} {2}", n1, op1, content);
+                        if (result >= stepValue)
+                        {
+                            // 如果是减法，那么校验差是否大于零
+                            break;
+                        }
                     }
                 }
 
-                // 返回
-                return content;
+                // 更新 StringBuilder 和 result
+                if (stepValue < 0)
+                {
+                    throw new InvalidQuestionException();
+                }
+                if (usePlusOp)
+                {
+                    // 按照加法更新
+                    if (isFirstStep)
+                    {
+                        sb.Append(stepExpression);
+                    }
+                    else
+                    {
+                        sb.AppendFormat(" + {0}", stepExpression);
+                    }
+                    result += stepValue;
+                }
+                else
+                {
+                    if (result < stepValue)
+                    {
+                        throw new InvalidQuestionException();
+                    }
+
+                    // 按照减法更新
+                    sb.AppendFormat(" - {0}", stepExpression);
+                    result -= stepValue;
+                }
             }
 
             /// <summary>
@@ -274,13 +267,13 @@ namespace bsd_shuxue_3.Domain.Impl
             {
                 a = this.NextNumber(this.Config.MinMultiplyA, this.Config.MaxMultiplyA);
                 b = this.NextNumber(this.Config.MinMultiplyB, this.Config.MaxMultiplyB);
-                if (this.NextBoolean())
-                {
-                    // 随机交换乘数和被乘数的顺序
-                    var temp = a;
-                    a = b;
-                    b = temp;
-                }
+                //if (this.NextBoolean())
+                //{
+                //    // 随机交换乘数和被乘数的顺序
+                //    var temp = a;
+                //    a = b;
+                //    b = temp;
+                //}
             }
 
             /// <summary>

@@ -157,7 +157,7 @@ namespace bsd_shuxue_3.Domain.Impl
                 }
             }
 
-            protected override bool IsValidQuestionAnswer(int answer)
+            protected override bool IsValidQuestionAnswer(Decimal answer)
             {
                 return answer >= this.Config.MinResult && answer <= this.Config.MaxResult;
             }

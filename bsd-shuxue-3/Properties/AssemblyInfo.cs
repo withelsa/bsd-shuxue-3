@@ -48,8 +48,8 @@ using System.Windows;
 //通过使用 "*"，如下所示:
 // [assembly: AssemblyVersion("1.0.*")]
 //[assembly: AssemblyVersion("1.0.0.0")]
-//[assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: AssemblyTitle("��ʦ����ѧ���꼶 (2020/10/18 17:03:10)")]
-[assembly: AssemblyDescription("��ʦ����ѧ���꼶 (2020/10/18 17:03:10)")]
-[assembly: AssemblyVersion("1.0.2020.1018")]
-[assembly: AssemblyFileVersion("1.0.2020.1018")]
+//[assembly: AssemblyFileVersion("1.0.0.0")] 
+ [assembly: AssemblyTitle("��ʦ����ѧ���꼶 (2020/10/22 22:58:21)")] 
+ [assembly: AssemblyDescription("��ʦ����ѧ���꼶 (2020/10/22 22:58:21)")] 
+ [assembly: AssemblyVersion("1.0.2020.1022")] 
+ [assembly: AssemblyFileVersion("1.0.2020.1022")] 

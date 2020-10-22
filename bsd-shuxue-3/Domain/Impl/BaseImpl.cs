@@ -50,12 +50,12 @@ namespace bsd_shuxue_3.Domain.Impl
                 .Replace('/', '÷');
         }
 
-        public int Answer
+        public Decimal Answer
         {
             get
             {
                 var expression = new NCalc.Expression(this.Expression);
-                Func<int> func = expression.ToLambda<int>();
+                Func<Decimal> func = expression.ToLambda<Decimal>();
                 return func();
             }
         }
@@ -279,7 +279,7 @@ namespace bsd_shuxue_3.Domain.Impl
         /// </summary>
         /// <param name="answer"></param>
         /// <returns></returns>
-        protected abstract bool IsValidQuestionAnswer(int answer);
+        protected abstract bool IsValidQuestionAnswer(Decimal answer);
 
         /// <summary>
         /// 生成一个问题

@@ -14,8 +14,12 @@ namespace bsd_shuxue_3.Domain
             lianJiaLianJian(collection);
             jiaJianHunHe(collection);
             siZeHunHe(collection);
+            siZeHunHe2(collection);
             chengFa(collection);
             chuFa(collection);
+            lianCheng(collection);
+            chengChuHunHe(collection);
+            xiaoShuLianJiaLianJian(collection);
         }
 
         private void lianJiaLianJian(ICollection<IQuestionFactory> collection)
@@ -232,6 +236,148 @@ namespace bsd_shuxue_3.Domain
                 config.MinDivideA = 10;
                 config.MaxDivideB = 9;
                 config.MinDivideB = 2;
+            }
+            // 【四则混合】三位数加减，三位数乘、除一位数
+            {
+                var questionFactory = new SiZeHunHe.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "三位数加减，三位数乘、除一位数";
+                var config = questionFactory.Config;
+                config.MaxNumber = 999;
+                config.MinResult = 100;
+                config.MaxResult = 9999;
+                config.MaxMultiplyA = 999;
+                config.MinMultiplyA = 10;
+                config.MaxMultiplyB = 9;
+                config.MinMultiplyB = 2;
+                config.MaxDivideA = 999;
+                config.MinDivideA = 10;
+                config.MaxDivideB = 9;
+                config.MinDivideB = 2;
+            }
+            // 【四则混合】四位数加减，四位数乘、除一位数
+            {
+                var questionFactory = new SiZeHunHe.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "四位数加减，四位数乘、除一位数";
+                questionFactory.Level = DifficultyLevel.Hard;
+                var config = questionFactory.Config;
+                config.MaxNumber = 9999;
+                config.MinNumber = 2;
+                config.MinResult = 100;
+                config.MaxResult = 9999;
+                config.MaxMultiplyA = 9999;
+                config.MinMultiplyA = 10;
+                config.MaxMultiplyB = 9;
+                config.MinMultiplyB = 2;
+                config.MaxDivideA = 9999;
+                config.MinDivideA = 10;
+                config.MaxDivideB = 9;
+                config.MinDivideB = 2;
+            }
+        }
+
+        private void siZeHunHe2(ICollection<IQuestionFactory> collection)
+        {
+            // 【四则混合（2）】两位数乘/除一位数，加减（1 次），两位数乘/除一位数
+            {
+                var questionFactory = new SiZeHunHe2.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "两位数乘/除一位数，加减（1 次），两位数乘/除一位数";
+                var config = questionFactory.Config;
+                config.MaxNumber = 999;
+                config.MinResult = 100;
+                config.MaxResult = 9999;
+                config.MaxMultiplyA = 99;
+                config.MinMultiplyA = 10;
+                config.MaxMultiplyB = 9;
+                config.MinMultiplyB = 2;
+                config.MaxDivideA = 99;
+                config.MinDivideA = 10;
+                config.MaxDivideB = 9;
+                config.MinDivideB = 2;
+            }
+            // 【四则混合（2）】三位数乘/除一位数，加减（1 次），三位数乘/除一位数
+            {
+                var questionFactory = new SiZeHunHe2.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "三位数乘/除一位数，加减（1 次），三位数乘/除一位数";
+                questionFactory.Level = DifficultyLevel.Hard;
+                var config = questionFactory.Config;
+                config.MaxNumber = 999;
+                config.MinResult = 100;
+                config.MaxResult = 9999;
+                config.MaxMultiplyA = 999;
+                config.MinMultiplyA = 100;
+                config.MaxMultiplyB = 9;
+                config.MinMultiplyB = 2;
+                config.MaxDivideA = 999;
+                config.MinDivideA = 100;
+                config.MaxDivideB = 9;
+                config.MinDivideB = 2;
+            }
+            // 【四则混合（2）】两位数乘/除一位数，加减（2 次），两位数乘/除一位数
+            {
+                var questionFactory = new SiZeHunHe2.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "两位数乘/除一位数，加减（2 次），两位数乘/除一位数";
+                var config = questionFactory.Config;
+                questionFactory.Level = DifficultyLevel.Hard;
+                config.MaxNumber = 999;
+                config.MinResult = 100;
+                config.MaxResult = 9999;
+                config.MaxMultiplyA = 99;
+                config.MinMultiplyA = 10;
+                config.MaxMultiplyB = 9;
+                config.MinMultiplyB = 2;
+                config.MaxDivideA = 99;
+                config.MinDivideA = 10;
+                config.MaxDivideB = 9;
+                config.MinDivideB = 2;
+                config.MinPlusMinusSteps = 2;
+                config.MaxPlusMinusSteps = 2;
+            }
+            // 【四则混合（2）】三位数乘/除一位数，加减（2 次），三位数乘/除一位数
+            {
+                var questionFactory = new SiZeHunHe2.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "三位数乘/除一位数，加减（2 次），三位数乘/除一位数";
+                questionFactory.Level = DifficultyLevel.VeryHard;
+                var config = questionFactory.Config;
+                config.MaxNumber = 999;
+                config.MinResult = 100;
+                config.MaxResult = 99999;
+                config.MaxMultiplyA = 999;
+                config.MinMultiplyA = 100;
+                config.MaxMultiplyB = 9;
+                config.MinMultiplyB = 2;
+                config.MaxDivideA = 999;
+                config.MinDivideA = 100;
+                config.MaxDivideB = 9;
+                config.MinDivideB = 2;
+                config.MinPlusMinusSteps = 2;
+                config.MaxPlusMinusSteps = 2;
+            }
+            // 【四则混合（2）】2-3位数乘/除一位数，加减（1-2 次），2-3位数乘/除一位数
+            {
+                var questionFactory = new SiZeHunHe2.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "2-3位数乘/除一位数，加减（1-2 次），2-3位数乘/除一位数";
+                questionFactory.Level = DifficultyLevel.VeryHard;
+                var config = questionFactory.Config;
+                config.MaxNumber = 999;
+                config.MinResult = 100;
+                config.MaxResult = 99999;
+                config.MaxMultiplyA = 999;
+                config.MinMultiplyA = 10;
+                config.MaxMultiplyB = 9;
+                config.MinMultiplyB = 2;
+                config.MaxDivideA = 999;
+                config.MinDivideA = 10;
+                config.MaxDivideB = 9;
+                config.MinDivideB = 2;
+                config.MinPlusMinusSteps = 1;
+                config.MaxPlusMinusSteps = 2;
             }
         }
 
@@ -467,6 +613,183 @@ namespace bsd_shuxue_3.Domain
                 config.MaxB = 99;
                 config.MinB = 10;
                 config.MaxResult = 9999;
+            }
+        }
+
+        private void lianCheng(ICollection<IQuestionFactory> collection)
+        {
+            // 【连乘】两位数 × 一位数 × 一位数
+            {
+                var questionFactory = new LianCheng.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "两位数 × 一位数 × 一位数";
+                var config = questionFactory.Config;
+                config.MaxA = 99;
+                config.MinA = 11;
+                config.MaxB = 9;
+                config.MinB = 2;
+                config.MinSteps = 2;
+                config.MaxSteps = 2;
+                config.MaxResult = 9999;
+            }
+            // 【连乘】三位数 × 一位数 × 一位数
+            {
+                var questionFactory = new LianCheng.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "三位数 × 一位数 × 一位数";
+                questionFactory.Level = DifficultyLevel.Hard;
+                var config = questionFactory.Config;
+                config.MaxA = 999;
+                config.MinA = 101;
+                config.MaxB = 9;
+                config.MinB = 2;
+                config.MinSteps = 2;
+                config.MaxSteps = 2;
+                config.MaxResult = 9999;
+            }
+            // 【连乘】2 - 3位数 × 一位数 × 一位数
+            {
+                var questionFactory = new LianCheng.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "2 - 3位数 × 一位数 × 一位数";
+                questionFactory.Level = DifficultyLevel.Hard;
+                var config = questionFactory.Config;
+                config.MaxA = 999;
+                config.MinA = 11;
+                config.MaxB = 9;
+                config.MinB = 2;
+                config.MinSteps = 2;
+                config.MaxSteps = 2;
+                config.MaxResult = 9999;
+            }
+            // 【连乘】两位数 × 一位数 × 一位数 × 一位数
+            {
+                var questionFactory = new LianCheng.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "两位数 × 一位数 × 一位数 × 一位数";
+                questionFactory.Level = DifficultyLevel.VeryHard;
+                var config = questionFactory.Config;
+                config.MaxA = 99;
+                config.MinA = 11;
+                config.MaxB = 9;
+                config.MinB = 2;
+                config.MinSteps = 3;
+                config.MaxSteps = 3;
+                config.MaxResult = 9999;
+            }
+        }
+
+        private void chengChuHunHe(ICollection<IQuestionFactory> collection)
+        {
+            // 【乘除混合】两位数 乘除 一位数 乘除 一位数
+            {
+                var questionFactory = new ChengChuHunHe.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "两位数 乘除 一位数 乘除 一位数";
+                questionFactory.Level = DifficultyLevel.Hard;
+                var config = questionFactory.Config;
+                config.MaxA = 99;
+                config.MinA = 11;
+                config.MaxB = 9;
+                config.MinB = 2;
+                config.MaxResult = 9999;
+            }
+            // 【乘除混合】三位数 乘除 一位数 乘除 一位数
+            {
+                var questionFactory = new ChengChuHunHe.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "三位数 乘除 一位数 乘除 一位数";
+                var config = questionFactory.Config;
+                questionFactory.Level = DifficultyLevel.VeryHard;
+                config.MaxA = 999;
+                config.MinA = 101;
+                config.MaxB = 9;
+                config.MinB = 2;
+                config.MaxResult = 9999;
+            }
+        }
+
+        private void xiaoShuLianJiaLianJian(ICollection<IQuestionFactory> collection)
+        {
+            // 【小数连加连减】1 位整数 1 位小数的加减法
+            {
+                var questionFactory = new XiaoShuLianJiaLianJian.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "1 位整数 1 位小数的加减法";
+                var config = questionFactory.Config;
+                config.MinNumber = 1;
+                config.MaxNumber = 9;
+                config.Decimals = 1;
+                config.MinSteps = config.MaxSteps = 1;
+                config.XiaoShuJinTuiWeiRatio = 50;
+                config.ZhengShuJinTuiWeiRatio = 50;
+            }
+            // 【小数连加连减】1 位整数 1 位小数的加减法（小数部分进退位）
+            {
+                var questionFactory = new XiaoShuLianJiaLianJian.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "1 位整数 1 位小数的加减法（小数部分进退位）";
+                var config = questionFactory.Config;
+                config.MinNumber = 1;
+                config.MaxNumber = 9;
+                config.Decimals = 1;
+                config.MinSteps = config.MaxSteps = 1;
+                config.XiaoShuJinTuiWeiRatio = 95;
+                config.ZhengShuJinTuiWeiRatio = 95;
+            }
+            // 【小数连加连减】1 位整数 1 位小数的 2 次加减法
+            {
+                var questionFactory = new XiaoShuLianJiaLianJian.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "1 位整数 1 位小数的 2 次加减法";
+                questionFactory.Level = DifficultyLevel.Hard;
+                var config = questionFactory.Config;
+                config.MinNumber = 1;
+                config.MaxNumber = 9;
+                config.Decimals = 1;
+                config.MinSteps = config.MaxSteps = 2;
+                config.XiaoShuJinTuiWeiRatio = 95;
+                config.ZhengShuJinTuiWeiRatio = 95;
+            }
+            // 【小数连加连减】2 位整数 1 位小数的加减法
+            {
+                var questionFactory = new XiaoShuLianJiaLianJian.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "2 位整数 1 位小数的加减法";
+                var config = questionFactory.Config;
+                config.MinNumber = 10;
+                config.MaxNumber = 99;
+                config.Decimals = 1;
+                config.MinSteps = config.MaxSteps = 1;
+                config.XiaoShuJinTuiWeiRatio = 50;
+                config.ZhengShuJinTuiWeiRatio = 50;
+            }
+            // 【小数连加连减】2 位整数 1 位小数的加减法（小数部分进退位）
+            {
+                var questionFactory = new XiaoShuLianJiaLianJian.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "2 位整数 1 位小数的加减法（小数部分进退位）";
+                var config = questionFactory.Config;
+                config.MinNumber = 10;
+                config.MaxNumber = 99;
+                config.Decimals = 1;
+                config.MinSteps = config.MaxSteps = 1;
+                config.XiaoShuJinTuiWeiRatio = 95;
+                config.ZhengShuJinTuiWeiRatio = 95;
+            }
+            // 【小数连加连减】2 位整数 1 位小数的 2 次加减法
+            {
+                var questionFactory = new XiaoShuLianJiaLianJian.QuestionFactory();
+                collection.Add(questionFactory);
+                questionFactory.Title = "2 位整数 1 位小数的 2 次加减法";
+                questionFactory.Level = DifficultyLevel.VeryHard;
+                var config = questionFactory.Config;
+                config.MinNumber = 10;
+                config.MaxNumber = 99;
+                config.Decimals = 1;
+                config.MinSteps = config.MaxSteps = 2;
+                config.XiaoShuJinTuiWeiRatio = 95;
+                config.ZhengShuJinTuiWeiRatio = 95;
             }
         }
     }

@@ -81,7 +81,7 @@ namespace bsd_shuxue_3.Domain.Impl
                 return String.Format("{0} / {1}", a, b);
             }
 
-            protected override bool IsValidQuestionAnswer(int answer)
+            protected override bool IsValidQuestionAnswer(Decimal answer)
             {
                 return answer >= this.Config.MinResult && answer <= this.Config.MaxResult;
             }

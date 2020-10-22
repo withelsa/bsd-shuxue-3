@@ -22,7 +22,7 @@ namespace bsd_shuxue_3.Domain
         /// <summary>
         /// 问题答案
         /// </summary>
-        int Answer { get; }
+        Decimal Answer { get; }
     }
 
     /// <summary>

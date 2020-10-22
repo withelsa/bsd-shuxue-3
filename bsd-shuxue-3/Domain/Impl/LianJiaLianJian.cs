@@ -60,6 +60,8 @@ namespace bsd_shuxue_3.Domain.Impl
             /// <summary>
             /// 进位退位的比例(0 的时候不特别计算进位和退位)
             /// </summary>
+            [Category("其他")]
+            [Description("进位退位的比例")]
             public uint JinTuiWeiRatio { get; set; } = 0;
 
             public bool Validate(IList<string> messages)
@@ -198,7 +200,7 @@ namespace bsd_shuxue_3.Domain.Impl
                 return this.NextNumber(this.Config.MinNumber, this.Config.MaxNumber, usedNumbers);
             }
 
-            protected override bool IsValidQuestionAnswer(int answer)
+            protected override bool IsValidQuestionAnswer(Decimal answer)
             {
                 return answer >= this.Config.MinResult && answer <= this.Config.MaxResult;
             }
