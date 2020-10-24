@@ -174,7 +174,8 @@
                     </Button>
                 </ToolBar>
                 <TextBox x:Name="txtQuestions" Margin="3" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
-                     FontSize="16" ToolTip="双击复制题目到剪贴板" MouseDoubleClick="txtQuestions_MouseDoubleClick"></TextBox>
+                          AcceptsReturn="True" AcceptsTab="True" FontSize="16" ToolTip="双击复制题目到剪贴板"
+                         MouseDoubleClick="txtQuestions_MouseDoubleClick"></TextBox>
             </DockPanel>
         </GroupBox>
     </DockPanel>
